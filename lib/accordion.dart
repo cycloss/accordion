@@ -113,8 +113,6 @@ class ListController extends GetxController {
   }
 }
 
-final listCtrl = ListController();
-
 /// The container list for all accordion sections. Usage:
 /// ```dart
 ///	Accordion(
@@ -146,8 +144,9 @@ class Accordion extends StatelessWidget with CommonParams {
   final double paddingListHorizontal;
   final double paddingListTop;
   final double paddingListBottom;
-
+  final ListController listCtrl;
   Accordion({
+    required ListController controller,
     int? maxOpenSections,
     this.children,
     int? initialOpeningSequenceDelay,
@@ -171,7 +170,7 @@ class Accordion extends StatelessWidget with CommonParams {
     double? paddingBetweenOpenSections,
     double? paddingBetweenClosedSections,
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
-  }) {
+  }) : this.listCtrl = controller {
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     this._headerBackgroundColor = headerBackgroundColor;
     this._headerBorderRadius = headerBorderRadius ?? 30;
@@ -209,6 +208,7 @@ class Accordion extends StatelessWidget with CommonParams {
 
     return Scrollbar(
       child: ListView(
+        shrinkWrap: true,
         controller: listCtrl.controller,
         padding: EdgeInsets.only(
           top: paddingListTop,
@@ -229,6 +229,7 @@ class Accordion extends StatelessWidget with CommonParams {
               controller: listCtrl.controller,
               index: index,
               child: AccordionSection(
+                controller: listCtrl,
                 key: key,
                 index: index++,
                 isOpen: child._sectionCtrl.isSectionOpen.value,
@@ -328,8 +329,10 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
   /// The widget to be displayed as the content of the section when open
   final Widget content;
+  final ListController listCtrl;
 
   AccordionSection({
+    required ListController controller,
     this.key,
     this.index = 0,
     bool isOpen = false,
@@ -352,7 +355,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     double? paddingBetweenOpenSections,
     double? paddingBetweenClosedSections,
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
-  }) {
+  }) : this.listCtrl = controller {
     _sectionCtrl = SectionController();
     _sectionCtrl.isSectionOpen.value = isOpen;
 

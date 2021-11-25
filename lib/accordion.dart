@@ -206,83 +206,78 @@ class Accordion extends StatelessWidget with CommonParams {
   build(context) {
     int index = 0;
 
-    return Scrollbar(
-      child: ListenableProvider<ListController>.value(
-          value: listCtrl,
-          builder: (context, _) {
-            return ListView(
-              shrinkWrap: true,
-              controller: listCtrl.controller,
-              padding: EdgeInsets.only(
-                top: paddingListTop,
-                bottom: paddingListBottom,
-                right: paddingListHorizontal,
-                left: paddingListHorizontal,
-              ),
-              cacheExtent: 100000,
-              children: children.map(
-                (child) {
-                  final key = UniqueKey();
+    return ListenableProvider<ListController>.value(
+        value: listCtrl,
+        builder: (context, _) {
+          return ListView(
+            shrinkWrap: true,
+            controller: listCtrl.controller,
+            padding: EdgeInsets.only(
+              top: paddingListTop,
+              bottom: paddingListBottom,
+              right: paddingListHorizontal,
+              left: paddingListHorizontal,
+            ),
+            cacheExtent: 100000,
+            children: children.map(
+              (child) {
+                final key = UniqueKey();
 
-                  if (child._sectionCtrl.isSectionOpen.value)
-                    listCtrl.openSections.add(key);
+                if (child._sectionCtrl.isSectionOpen.value)
+                  listCtrl.openSections.add(key);
 
-                  return AutoScrollTag(
-                    key: ValueKey(key),
-                    controller: listCtrl.controller,
-                    index: index,
-                    child: AccordionSection(
-                      key: key,
-                      index: index++,
-                      isOpen: child._sectionCtrl.isSectionOpen.value,
-                      scrollIntoViewOfItems: _scrollIntoViewOfItems,
-                      headerBackgroundColor: child._headerBackgroundColor ??
-                          _headerBackgroundColor,
-                      headerBorderRadius:
-                          child._headerBorderRadius ?? _headerBorderRadius,
-                      headerText: child.headerText,
-                      headerTextStyle:
-                          child._headerTextStyle ?? _headerTextStyle,
-                      headerTextAlign:
-                          child._headerTextAlign ?? _headerTextAlign,
-                      headerPadding: child._headerPadding ?? _headerPadding,
-                      leftIcon: child._leftIcon ?? _leftIcon,
-                      rightIcon: child._rightIcon ??
-                          _rightIcon ??
-                          Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Colors.white60,
-                            size: 20,
-                          ),
-                      flipRightIconIfOpen:
-                          child._flipRightIconIfOpen ?? _flipRightIconIfOpen,
-                      paddingBetweenClosedSections:
-                          child._paddingBetweenClosedSections ??
-                              _paddingBetweenClosedSections,
-                      paddingBetweenOpenSections:
-                          child._paddingBetweenOpenSections ??
-                              _paddingBetweenOpenSections,
-                      content: child.content,
-                      contentBackgroundColor: child._contentBackgroundColor ??
-                          _contentBackgroundColor,
-                      contentBorderColor:
-                          child._contentBorderColor ?? _contentBorderColor,
-                      contentBorderWidth:
-                          child._contentBorderWidth ?? _contentBorderWidth,
-                      contentBorderRadius:
-                          child._contentBorderRadius ?? _contentBorderRadius,
-                      contentHorizontalPadding:
-                          child._contentHorizontalPadding ??
-                              _contentHorizontalPadding,
-                      contentVerticalPadding: child._contentVerticalPadding ??
-                          _contentVerticalPadding,
-                    ),
-                  );
-                },
-              ).toList(),
-            );
-          }),
-    );
+                return AutoScrollTag(
+                  key: ValueKey(key),
+                  controller: listCtrl.controller,
+                  index: index,
+                  child: AccordionSection(
+                    key: key,
+                    index: index++,
+                    isOpen: child._sectionCtrl.isSectionOpen.value,
+                    scrollIntoViewOfItems: _scrollIntoViewOfItems,
+                    headerBackgroundColor:
+                        child._headerBackgroundColor ?? _headerBackgroundColor,
+                    headerBorderRadius:
+                        child._headerBorderRadius ?? _headerBorderRadius,
+                    headerText: child.headerText,
+                    headerTextStyle: child._headerTextStyle ?? _headerTextStyle,
+                    headerTextAlign: child._headerTextAlign ?? _headerTextAlign,
+                    headerPadding: child._headerPadding ?? _headerPadding,
+                    leftIcon: child._leftIcon ?? _leftIcon,
+                    rightIcon: child._rightIcon ??
+                        _rightIcon ??
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white60,
+                          size: 20,
+                        ),
+                    flipRightIconIfOpen:
+                        child._flipRightIconIfOpen ?? _flipRightIconIfOpen,
+                    paddingBetweenClosedSections:
+                        child._paddingBetweenClosedSections ??
+                            _paddingBetweenClosedSections,
+                    paddingBetweenOpenSections:
+                        child._paddingBetweenOpenSections ??
+                            _paddingBetweenOpenSections,
+                    content: child.content,
+                    contentBackgroundColor: child._contentBackgroundColor ??
+                        _contentBackgroundColor,
+                    contentBorderColor:
+                        child._contentBorderColor ?? _contentBorderColor,
+                    contentBorderWidth:
+                        child._contentBorderWidth ?? _contentBorderWidth,
+                    contentBorderRadius:
+                        child._contentBorderRadius ?? _contentBorderRadius,
+                    contentHorizontalPadding: child._contentHorizontalPadding ??
+                        _contentHorizontalPadding,
+                    contentVerticalPadding: child._contentVerticalPadding ??
+                        _contentVerticalPadding,
+                  ),
+                );
+              },
+            ).toList(),
+          );
+        });
   }
 }
 
